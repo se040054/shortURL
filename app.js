@@ -5,7 +5,7 @@ const port = 3000
 const http = require('http');
 const https = require('https');
 let fullURL;
-
+let data=''
 app.engine('.hbs', engine({extname: '.hbs'}))
 app.set('view engine', '.hbs')
 app.set('views', './views')
@@ -14,6 +14,9 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
   res.redirect('/shortURL')
 })
+
+
+
 
 app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有可能搶先
   
@@ -76,4 +79,19 @@ function isURLvalid(url){
       }).on('error', (err) => {
       reject(err) })
     })
+}
+
+function getRandomNumbers(){
+  
+  while(data.length<5){
+    data=''
+    const type=Math.floor(Math.random()*3)
+    let word=''
+    switch (type){
+      case 0 : word =String.fromCharCode(Math.floor(Math.random() * 26) + 97);break;
+      case 1 : word =String.fromCharCode(Math.floor(Math.random() * 26) + 65);break;
+      case 2 : word =String.fromCharCode(Math.floor(Math.random() * 11) + 47);
+    }
+    data+=word
+  }
 }
