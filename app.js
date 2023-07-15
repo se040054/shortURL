@@ -26,7 +26,7 @@ app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有�
     await isURLvalid(fullURL).then((result)=>{
       if (result){
         console.log("有效網址 : " + fullURL)
-        search ="search"
+        search ="success"
       }else{
         console.log("無效網址 : " + fullURL)
         search = "wrong"
@@ -39,8 +39,8 @@ app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有�
 
   if (search==="none"){
       res.render('home' , {fullURL})
-    }else if (search==="yes"){
-      res.render('search' , {fullURL})
+    }else if (search==="success"){
+      res.render('success' , {fullURL})
     }else if (search==="empty"){
       res.render('empty')
     }else if (search==="wrong"){
