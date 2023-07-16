@@ -58,7 +58,26 @@ app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有�
 })
 
 
-
+app.get('/shortURL/:id' , (req,res)=>{
+  shortURL = req.params.id
+  let find=false
+  URLlist.some(URLpair =>{
+    if (URLpair.short===shortURL){
+      fullURL=URLpair.full
+      shortURL=URLpair.short
+      console.log("此網址已有生成紀錄")
+      find=true
+      return
+    }
+  })
+  if (find){
+    res.redirect(fullURL)
+  }
+  else{
+    res.render('wrong')
+  }
+  
+})
 
 
 app.listen(port, () => {
