@@ -6,6 +6,10 @@ What a useful website that you can cut url what is too long here !
 
 # How to use
  
+Before these steps , you need install node.js and git in your computer. 
+
+
+
 1. clone this project :
 ```
 $ git clone https://github.com/se040054/shortURL.git
@@ -26,6 +30,10 @@ $ npm run start
 ```
 Click : http://localhost:3000/shortURL
 ```
+
+use 
+```ctrl + c ```
+to stop this project
 
 # Development tool
 
