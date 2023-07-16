@@ -7,8 +7,10 @@ const https = require('https');
 const URLlist=require('./public/json/data.json').result ;
 const fs = require('fs');
 
+
 let fullURL;
 let shortURL;
+
 
 app.engine('.hbs', engine({extname: '.hbs'}))
 app.set('view engine', '.hbs')
@@ -23,7 +25,7 @@ app.get('/', (req, res) => {
 
 app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有可能搶先
   
-  
+
   fullURL = req.query.transform?.trim();
   let search= "none" //一開始沒有設置搜尋
   if ( (typeof(fullURL)==='string') && (fullURL.length===0)){ //搜尋有被建立 但是空搜尋
@@ -32,12 +34,12 @@ app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有�
   else if ((typeof(fullURL)==='string') && (fullURL.length>0)) { //搜尋有被建立 檢查並回傳網址
     await isURLvalid(fullURL).then((result)=>{
       if (result){
-        console.log("有效網址 : " + fullURL)
+      //  console.log("有效網址 : " + fullURL)
         search ="success"
         writeJSON(fullURL)
 
       }else{
-        console.log("無效網址 : " + fullURL)
+      //  console.log("無效網址 : " + fullURL)
         search = "wrong"
       }
     }).catch((err)=>{
@@ -65,7 +67,7 @@ app.get('/shortURL/:id' , (req,res)=>{
     if (URLpair.short===shortURL){
       fullURL=URLpair.full
       shortURL=URLpair.short
-      console.log("此網址已有生成紀錄")
+      // console.log("此網址已有生成紀錄")
       find=true
       return
     }
@@ -128,9 +130,9 @@ function writeJSON(fullURL){ //檢查長網址是否已有配對，生成短網�
     if (URLpair.full===fullURL){
       pairURL.short=URLpair.short
       shortURL=URLpair.short
-      console.log("此網址已有生成紀錄")
+      // console.log("此網址已有生成紀錄")
       find=true
-      return ; //pairURL  若出現錯誤改用Return 物件
+      return ;
     }
   })
   if (find) {
@@ -149,5 +151,5 @@ function writeJSON(fullURL){ //檢查長網址是否已有配對，生成短網�
      // console.log(JsonData +"寫入成功")
     }
   })
-  // return pairURL  若出現錯誤改用Return 物件
 }
+

@@ -1,4 +1,17 @@
 
-<h5> <p>短網址 : </p> <a href="http://localhost:3000/shortURL/{{shortURL}}"> http://localhost:3000/shortURL/{{shortURL}}</a></h5>
+<div>
+  <h5> <p>短網址 : </p> <a href="http://localhost:3000/shortURL/{{shortURL}}"> http://localhost:3000/shortURL/{{shortURL}}</a>
+  </h5>
+  <button class="btn btn-primary" id="btn-copy" onclick="copyToClipBoard()" >Copy</button>
+</div>
+
+
+  <script>
+    let copyURL = "http://localhost:3000/shortURL/{{shortURL}}";
+  </script>
+
 
 <h5> <p>原網址 : </p> <a href="{{fullURL}}"> {{fullURL}}</a></h5>
+
+
+<script src="/javascript/index.js"></script>
