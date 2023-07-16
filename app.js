@@ -28,7 +28,7 @@ app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有�
 
   fullURL = req.query.transform?.trim();
   let search= "none" //一開始沒有設置搜尋
-  if ( (typeof(fullURL)==='string') && (fullURL.length===0)){ //搜尋有被建立 但是空搜尋
+  if ( (typeof(fullURL)==='string') && (fullURL.length===0)){ //搜尋有被建立 但是空搜尋 若使用者沒有輸入內容，就按下了送出鈕，需要防止表單送出並提示使用者
     search="empty" 
   }
   else if ((typeof(fullURL)==='string') && (fullURL.length>0)) { //搜尋有被建立 檢查並回傳網址
@@ -67,7 +67,7 @@ app.get('/shortURL/:id' , (req,res)=>{
     if (URLpair.short===shortURL){
       fullURL=URLpair.full
       shortURL=URLpair.short
-      // console.log("此網址已有生成紀錄")
+      // console.log("此網址已有生成紀錄") 輸入相同網址時，產生一樣的縮址。
       find=true
       return
     }
