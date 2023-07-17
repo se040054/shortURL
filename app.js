@@ -131,6 +131,9 @@ function writeJSON(fullURL){ //檢查長網址是否已有配對，生成短網�
       return true
     }
   })
+  if (find){
+    return
+  }
   pairURL.short=getRandomNumbers() //物件短網址屬性賦值隨機亂數
   shortURL =pairURL.short
   JsonURL = require('./public/json/data.json') //JSON檔案拿出來
