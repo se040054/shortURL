@@ -8,8 +8,7 @@ const URLlist=require('./public/json/data.json').result ;
 const fs = require('fs');
 
 
-let fullURL;
-let shortURL;
+
 
 
 app.engine('.hbs', engine({extname: '.hbs'}))
@@ -61,15 +60,15 @@ app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有�
 
 
 app.get('/shortURL/:id' , (req,res)=>{
+  let fullURL;
+  let shortURL;
   shortURL = req.params.id
   let find=false
   URLlist.some(URLpair =>{
     if (URLpair.short===shortURL){
       fullURL=URLpair.full
       shortURL=URLpair.short
-      // console.log("此網址已有生成紀錄") 輸入相同網址時，產生一樣的縮址。
-      find=true
-      return
+      return true
     }
   })
   if (find){
@@ -116,7 +115,7 @@ function getRandomNumbers(){
     switch (type){
       case 0 : word =String.fromCharCode(Math.floor(Math.random() * 26) + 97);break;
       case 1 : word =String.fromCharCode(Math.floor(Math.random() * 26) + 65);break;
-      case 2 : word =String.fromCharCode(Math.floor(Math.random() * 11) + 47);
+      case 2 : word =String.fromCharCode(Math.floor(Math.random() * 10) + 48);
     }
     data+=word
   }return data
@@ -125,19 +124,13 @@ function getRandomNumbers(){
 function writeJSON(fullURL){ //檢查長網址是否已有配對，生成短網址，檢查生成的短網址有無重複
   const pairURL ={"short":'',
                   "full":fullURL} 
-  let find=false          
-  URLlist.some(URLpair =>{
+  let find  =  URLlist.some(URLpair =>{
     if (URLpair.full===fullURL){
       pairURL.short=URLpair.short
       shortURL=URLpair.short
-      // console.log("此網址已有生成紀錄")
-      find=true
-      return ;
+      return true
     }
   })
-  if (find) {
-    return ;
-  }
   pairURL.short=getRandomNumbers() //物件短網址屬性賦值隨機亂數
   shortURL =pairURL.short
   JsonURL = require('./public/json/data.json') //JSON檔案拿出來
