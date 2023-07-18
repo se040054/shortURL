@@ -1,3 +1,4 @@
+
 const express = require('express')
 const { engine } = require('express-handlebars')
 const app = express()
@@ -24,7 +25,7 @@ app.get('/', (req, res) => {
 
 app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有可能搶先
   let fullURL;
-  
+  let shortURL;
   fullURL = req.query.transform?.trim();
   let search= "none" //一開始沒有設置搜尋
   if ( (typeof(fullURL)==='string') && (fullURL.length===0)){ //搜尋有被建立 但是空搜尋 若使用者沒有輸入內容，就按下了送出鈕，需要防止表單送出並提示使用者
@@ -35,7 +36,13 @@ app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有�
       if (result){
       //  console.log("有效網址 : " + fullURL)
         search ="success"
-        writeJSON(fullURL)
+          writeJSON(fullURL)
+           URLlist.some(URLpair =>{ 
+           if (URLpair.full===fullURL){
+            shortURL=URLpair.short
+              return 
+            }
+  })
 
       }else{
       //  console.log("無效網址 : " + fullURL)
@@ -63,7 +70,7 @@ app.get('/shortURL/:id' , (req,res)=>{
   let fullURL;
   let shortURL = req.params.id 
   let find= URLlist.some(URLpair =>{
-    if (URLpair.short===shortURL){
+    if (URLpair.short===shortURL){ 
       fullURL=URLpair.full
       shortURL=URLpair.short
       console.log("找到")
@@ -127,7 +134,7 @@ function writeJSON(fullURL){ //檢查長網址是否已有配對，生成短網�
   let find = URLlist.some(URLpair =>{
     if (URLpair.full===fullURL){
       pairURL.short=URLpair.short
-      shortURL=URLpair.short
+      let shortURL=URLpair.short
       return true
     }
   })
@@ -135,7 +142,7 @@ function writeJSON(fullURL){ //檢查長網址是否已有配對，生成短網�
     return
   }
   pairURL.short=getRandomNumbers() //物件短網址屬性賦值隨機亂數
-  shortURL =pairURL.short
+  let shortURL =pairURL.short
   JsonURL = require('./public/json/data.json') //JSON檔案拿出來
   JsonURL.result.push(pairURL) //改寫檔案
   const JsonData=JSON.stringify(JsonURL)
