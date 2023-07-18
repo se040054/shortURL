@@ -23,8 +23,8 @@ app.get('/', (req, res) => {
 
 
 app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有可能搶先
+  let fullURL;
   
-
   fullURL = req.query.transform?.trim();
   let search= "none" //一開始沒有設置搜尋
   if ( (typeof(fullURL)==='string') && (fullURL.length===0)){ //搜尋有被建立 但是空搜尋 若使用者沒有輸入內容，就按下了送出鈕，需要防止表單送出並提示使用者
@@ -61,17 +61,17 @@ app.get('/shortURL', async (req, res) => { //若無設置async/await 渲染有�
 
 app.get('/shortURL/:id' , (req,res)=>{
   let fullURL;
-  let shortURL;
-  shortURL = req.params.id
-  let find=false
-  URLlist.some(URLpair =>{
+  let shortURL = req.params.id 
+  let find= URLlist.some(URLpair =>{
     if (URLpair.short===shortURL){
       fullURL=URLpair.full
       shortURL=URLpair.short
+      console.log("找到")
       return true
     }
+    
   })
-  if (find){
+  if(find){
     res.redirect(fullURL)
   }
   else{
@@ -124,7 +124,7 @@ function getRandomNumbers(){
 function writeJSON(fullURL){ //檢查長網址是否已有配對，生成短網址，檢查生成的短網址有無重複
   const pairURL ={"short":'',
                   "full":fullURL} 
-  let find  =  URLlist.some(URLpair =>{
+  let find = URLlist.some(URLpair =>{
     if (URLpair.full===fullURL){
       pairURL.short=URLpair.short
       shortURL=URLpair.short
