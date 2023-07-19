@@ -1,4 +1,3 @@
-
 const express = require('express')
 const { engine } = require('express-handlebars')
 const app = express()
@@ -143,7 +142,7 @@ function writeJSON(fullURL){ //檢查長網址是否已有配對，生成短網�
   }
   pairURL.short=getRandomNumbers() //物件短網址屬性賦值隨機亂數
   let shortURL =pairURL.short
-  JsonURL = require('./public/json/data.json') //JSON檔案拿出來
+  let JsonURL = require('./public/json/data.json') //JSON檔案拿出來
   JsonURL.result.push(pairURL) //改寫檔案
   const JsonData=JSON.stringify(JsonURL)
   fs.writeFile('./public/json/data.json',JsonData , (err)=>{
